@@ -27,3 +27,13 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.Respond(w, newProduct, http.StatusCreated)
 }
+
+func GetAllProducts(w http.ResponseWriter, r *http.Request) {
+	merchantID := mux.Vars(r)["merchantID"]
+	products, err := services.GetAllProducts(merchantID)
+	if err != nil {
+		utils.HandleError(w, err, http.StatusNotFound)
+		return
+	}
+	utils.Respond(w, products, http.StatusOK)
+}

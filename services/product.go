@@ -44,13 +44,23 @@ func CreateProduct(merchantID string, product models.Product) (models.Product, e
 	products.Store(merchantID, append(merchantProducts.([]models.Product), product))
 
 	// console the content of the products to the console
-		// products.Range(func(key, value interface{}) bool {
-		// 	fmt.Printf("Merchant ID: %v\n", key)
-		// 	product := value.([]models.Product)
-		// 	for _, p := range product {
-		// 		fmt.Printf("Product: %v\n", p)
-		// 	}
-		// 	return true
-		// })
+	// products.Range(func(key, value interface{}) bool {
+	// 	fmt.Printf("Merchant ID: %v\n", key)
+	// 	product := value.([]models.Product)
+	// 	for _, p := range product {
+	// 		fmt.Printf("Product: %v\n", p)
+	// 	}
+	// 	return true
+	// })
 	return product, nil
+}
+
+// GetAllProducts gets all products for a merchant.
+func GetAllProducts(merchantID string) ([]models.Product, error) {
+	merchantProducts, ok := products.Load(merchantID)
+	if !ok {
+		return []models.Product{}, nil
+	}
+
+	return merchantProducts.([]models.Product), nil
 }
