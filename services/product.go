@@ -65,6 +65,7 @@ func GetAllProducts(merchantID string) ([]models.Product, error) {
 	return merchantProducts.([]models.Product), nil
 }
 
+// GetProduct gets a product by its SKU and merchant ID.
 func GetProduct(merchantID string, skuID string) (models.Product, error) {
 	merchantProducts, ok := products.Load(merchantID)
 	if !ok {
@@ -78,4 +79,30 @@ func GetProduct(merchantID string, skuID string) (models.Product, error) {
 	}
 
 	return models.Product{}, utils.NewError(fmt.Sprintf("no products found for merchant %s", merchantID))
+}
+
+// UpdateProduct updates a product by its SKU and merchant ID.
+func UpdateProduct(merchantID string, skuID string, product models.Product) (models.Product, error) {
+	merchantProducts, ok := products.Load(merchantID)
+	if !ok {
+		return models.Product{}, utils.NewError(fmt.Sprintf("no products found for merchant %s", merchantID))
+	}
+
+	for i, p := range merchantProducts.([]models.Product) {
+		if p.SKU == skuID {
+			// Only update name, decsription and price and update the updated at field
+			p.Name = product.Name
+			p.Description = product.Description
+			p.Price = product.Price
+			p.UpdatedAt = time.Now()
+
+			// Update the product in the slice
+			merchantProducts.([]models.Product)[i] = p
+			products.Store(merchantID, merchantProducts)
+
+			return p, nil
+		}
+	}
+
+	return models.Product{}, utils.NewError(fmt.Sprintf("product with SKU %s not found for merchant %s", skuID, merchantID))
 }

@@ -50,3 +50,22 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.Respond(w, product, http.StatusOK)
 }
+
+func UpdateProduct(w http.ResponseWriter, r *http.Request) {
+	merchantID := mux.Vars(r)["merchantID"]
+	skuID := mux.Vars(r)["skuID"]
+
+	var product models.Product
+	err := json.NewDecoder(r.Body).Decode(&product)
+	if err != nil {
+		utils.HandleError(w, err, http.StatusBadRequest)
+		return
+	}
+
+	updatedProduct, err := services.UpdateProduct(merchantID, skuID, product)
+	if err != nil {
+		utils.HandleError(w, err, http.StatusBadRequest)
+		return
+	}
+	utils.Respond(w, updatedProduct, http.StatusOK)
+}

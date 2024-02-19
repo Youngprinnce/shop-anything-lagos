@@ -22,3 +22,17 @@ func ValidateCreateProduct(product models.Product) error {
 	}
 	return nil
 }
+
+// creation a new function to validate the product
+func ValidateUpdateProduct(product models.Product) error {
+	if product.Name == "" {
+		return errors.New("Name is required")
+	}
+	if product.Description == "" {
+		return errors.New("Description is required")
+	}
+	if product.Price <= 0.0 {
+		return errors.New("Price must be positive")
+	}
+	return nil
+}
