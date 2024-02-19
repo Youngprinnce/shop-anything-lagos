@@ -17,6 +17,7 @@ func main() {
 
 	router.HandleFunc("/api/products/{merchantID}", middleware.ValidateProduct(handlers.CreateProduct, utils.ValidateCreateProduct)).Methods(http.MethodPost)
 	router.HandleFunc("/api/products/{merchantID}", handlers.GetAllProducts).Methods(http.MethodGet)
+	router.HandleFunc("/api/products/{merchantID}/{skuID}", handlers.GetProduct).Methods(http.MethodGet)
 
     log.Println("Server running on port", config.ServerAddr)
     log.Fatal(http.ListenAndServe(config.ServerAddr, router))

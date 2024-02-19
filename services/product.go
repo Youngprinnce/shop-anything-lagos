@@ -64,3 +64,18 @@ func GetAllProducts(merchantID string) ([]models.Product, error) {
 
 	return merchantProducts.([]models.Product), nil
 }
+
+func GetProduct(merchantID string, skuID string) (models.Product, error) {
+	merchantProducts, ok := products.Load(merchantID)
+	if !ok {
+		return models.Product{}, utils.NewError(fmt.Sprintf("no products found for merchant %s", merchantID))
+	}
+
+	for _, product := range merchantProducts.([]models.Product) {
+		if product.SKU == skuID {
+			return product, nil
+		}
+	}
+
+	return models.Product{}, utils.NewError(fmt.Sprintf("no products found for merchant %s", merchantID))
+}

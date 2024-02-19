@@ -39,8 +39,3 @@ func ValidateProduct(next http.HandlerFunc, validate func(models.Product) error)
 		next(w, r)
 	}
 }
-
-
-// func NewError(message string) error {
-//     return errors.New(message)
-// }

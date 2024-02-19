@@ -30,10 +30,23 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 	merchantID := mux.Vars(r)["merchantID"]
+
 	products, err := services.GetAllProducts(merchantID)
 	if err != nil {
 		utils.HandleError(w, err, http.StatusNotFound)
 		return
 	}
 	utils.Respond(w, products, http.StatusOK)
+}
+
+func GetProduct(w http.ResponseWriter, r *http.Request) {
+	merchantID := mux.Vars(r)["merchantID"]
+	skuID := mux.Vars(r)["skuID"]
+
+	product, err := services.GetProduct(merchantID, skuID)
+	if err != nil {
+		utils.HandleError(w, err, http.StatusBadRequest)
+		return
+	}
+	utils.Respond(w, product, http.StatusOK)
 }

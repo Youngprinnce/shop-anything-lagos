@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
@@ -18,4 +19,8 @@ func HandleError(w http.ResponseWriter, err error, statusCode int) {
         message = err.Error()
     }
     json.NewEncoder(w).Encode(map[string]string{"error": message, "status": strconv.Itoa(statusCode)})
+}
+
+func NewError(message string) error {
+    return errors.New(message)
 }
