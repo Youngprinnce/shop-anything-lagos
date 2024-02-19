@@ -106,3 +106,26 @@ func UpdateProduct(merchantID string, skuID string, product models.Product) (mod
 
 	return models.Product{}, utils.NewError(fmt.Sprintf("product with SKU %s not found for merchant %s", skuID, merchantID))
 }
+
+// DeleteProduct deletes a product by its SKU and merchant ID.
+func DeleteProduct(merchantID string, skuID string) error {
+	merchantProducts, ok := products.Load(merchantID)
+	if !ok {
+		return utils.NewError(fmt.Sprintf("no products found for merchant %s", merchantID))
+	}
+
+	for i, p := range merchantProducts.([]models.Product) {
+		if p.SKU == skuID {
+			// Remove the product from the slice
+			// First argument in the append method creates a new slice containing elements from the original slice up to (but not including) index i.
+			// Second argument in the append method creates a new slice containing elements from the original slice starting from index i+1 to the end.
+			// The ellipsis operator (...) is used to unpack the elements of the two slices.
+			newMerchantProducts := append(merchantProducts.([]models.Product)[:i], merchantProducts.([]models.Product)[i+1:]...)
+			products.Store(merchantID, newMerchantProducts)
+
+			return nil
+		}
+	}
+
+	return utils.NewError(fmt.Sprintf("product with SKU %s not found for merchant %s", skuID, merchantID))
+}

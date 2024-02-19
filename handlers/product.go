@@ -69,3 +69,15 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.Respond(w, updatedProduct, http.StatusOK)
 }
+
+func DeleteProduct(w http.ResponseWriter, r *http.Request) {
+	merchantID := mux.Vars(r)["merchantID"]
+	skuID := mux.Vars(r)["skuID"]
+
+	err := services.DeleteProduct(merchantID, skuID)
+	if err != nil {
+		utils.HandleError(w, err, http.StatusBadRequest)
+		return
+	}
+	utils.Respond(w, nil, http.StatusNoContent)
+}
