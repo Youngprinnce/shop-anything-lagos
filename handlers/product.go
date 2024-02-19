@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func createProduct(w http.ResponseWriter, r *http.Request) {
+func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	merchantID := mux.Vars(r)["merchant_id"]
 	var product models.Product
 
