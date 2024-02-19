@@ -37,6 +37,8 @@ func CreateProduct(merchantID string, product models.Product) (models.Product, e
 	}
 	product.ID = productID
 	product.CreatedAt = time.Now()
+	product.UpdatedAt = time.Now()
+	product.MerchantID = merchantID
 
 	// Append the new product to the slice
 	products.Store(merchantID, append(merchantProducts.([]models.Product), product))

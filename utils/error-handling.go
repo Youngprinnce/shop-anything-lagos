@@ -1,11 +1,21 @@
 package utils
 
 import (
-    "log"
-    "net/http"
+	"encoding/json"
+	"log"
+	"net/http"
+	"strconv"
 )
 
-func HandleError(w http.ResponseWriter, err error) {
+func HandleError(w http.ResponseWriter, err error, statusCode int) {
     log.Println(err)
-    http.Error(w, err.Error(), http.StatusInternalServerError)
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(statusCode)
+    var message string
+    if statusCode == http.StatusInternalServerError {
+        message = "Internal server error"
+    } else {
+        message = err.Error()
+    }
+    json.NewEncoder(w).Encode(map[string]string{"error": message, "status": strconv.Itoa(statusCode)})
 }

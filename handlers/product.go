@@ -11,18 +11,18 @@ import (
 )
 
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	merchantID := mux.Vars(r)["merchant_id"]
+	merchantID := mux.Vars(r)["merchantID"]
 	var product models.Product
 
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
-		utils.HandleError(w, err)
+		utils.HandleError(w, err, http.StatusBadRequest)
 		return
 	}
 
 	newProduct, err := services.CreateProduct(merchantID, product)
 	if err != nil {
-		utils.HandleError(w, err)
+		utils.HandleError(w, err, http.StatusBadRequest)
 		return
 	}
 	utils.Respond(w, newProduct, http.StatusCreated)

@@ -13,13 +13,13 @@ func ValidateProduct(next http.HandlerFunc, validate func(models.Product) error)
         var product models.Product
         err := json.NewDecoder(r.Body).Decode(&product)
         if err != nil {
-            utils.HandleError(w, err)
+            utils.HandleError(w, err, http.StatusBadRequest)
             return
         }
 
         err = validate(product)
         if err != nil {
-            utils.HandleError(w, err)
+            utils.HandleError(w, err, http.StatusBadRequest)
             return
         }
 
