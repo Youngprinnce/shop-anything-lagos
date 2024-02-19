@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/Youngprinnce/shop-anything-lagos/models"
 	"github.com/Youngprinnce/shop-anything-lagos/utils"
@@ -35,6 +36,7 @@ func CreateProduct(merchantID string, product models.Product) (models.Product, e
 		return models.Product{}, err
 	}
 	product.ID = productID
+	product.CreatedAt = time.Now()
 
 	// Append the new product to the slice
 	products.Store(merchantID, append(merchantProducts.([]models.Product), product))
