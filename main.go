@@ -1,3 +1,15 @@
+//   SAL Api: 
+//    version: 0.1 
+//    title: SAL Api 
+//   Schemes: http, https 
+//   Host: 
+//   BasePath: /api/products
+//      Consumes: 
+//      - application/json 
+//   Produces: 
+//   - application/json 
+//   swagger:meta 
+
 package main
 
 import (

@@ -1,0 +1,179 @@
+consumes:
+    - application/json
+definitions: 
+    product: 
+        type: object
+        required:
+            - id
+            - name
+            - description
+            - price
+            - merchant_id
+            - created_at
+            - updated_at
+            - sku
+        properties:
+            id:
+                type: string
+                readOnly: true
+            name:
+                type: string
+            description:
+                type: string
+            price:
+                type: number
+                format: double
+            merchant_id:
+                type: number
+            created_at:
+                type: string
+                format: date-time
+            updated_at:
+                type: string
+                format: date-time
+            sku:
+                type: string
+info:
+    title: Shop Anything Lagos
+    version: 0.1.0
+    description: Shop Anything Lagos API
+paths: 
+    /api/products/{merchantID}:
+        post:
+            tags:
+                - product
+            description: Returns all products
+            parameters:
+                - name: merchantID
+                  in: path
+                  description: ID of the merchant
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  description: Product object
+                  schema:
+                    type: object
+                    required:
+                        - name
+                        - description
+                        - price
+                        - sku
+                    properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
+                        price:
+                            type: number
+                            format: double
+                        sku:
+                            type: string
+            responses:
+                200:
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/product'
+        get:
+            tags:
+                - product
+            description: Returns all merchants products
+            parameters:
+                - name: merchantID
+                  in: path
+                  description: ID of the merchant
+                  required: true
+                  type: string
+            responses:
+                200:
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/product'
+    /api/products/{merchantID}/{skuID}:
+        get:
+            tags:
+                - product
+            description: Returns a single product
+            parameters:
+                - name: merchantID
+                  in: path
+                  description: ID of the merchant
+                  required: true
+                  type: string
+                - name: skuID
+                  in: path
+                  description: ID of the product
+                  required: true
+                  type: string
+            responses:
+                200:
+                    description: OK
+                    schema:
+                        $ref: '#/definitions/product'
+        put:
+            tags:
+                - product
+            description: Updates a single product
+            parameters:
+                - name: merchantID
+                  in: path
+                  description: ID of the merchant
+                  required: true
+                  type: string
+                - name: skuID
+                  in: path
+                  description: ID of the product
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  description: Product object
+                  schema:
+                    type: object
+                    required:
+                        - name
+                        - description
+                        - price
+                        - sku
+                    properties:
+                        name:
+                            type: string
+                        description:
+                            type: string
+                        price:
+                            type: number
+                            format: double
+                        sku:
+                            type: string
+            responses:
+                200:
+                    description: OK
+                    schema:
+                        $ref: '#/definitions/product'
+        delete:
+            tags:
+                - product
+            description: Deletes a single product
+            parameters:
+                - name: merchantID
+                  in: path
+                  description: ID of the merchant
+                  required: true
+                  type: string
+                - name: skuID
+                  in: path
+                  description: ID of the product
+                  required: true
+                  type: string
+            responses:
+                200:
+                    description: OK
+produces:
+    - application/json
+schemes:
+    - http
+swagger: "2.0"
