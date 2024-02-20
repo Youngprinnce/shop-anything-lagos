@@ -8,17 +8,17 @@ import (
 
 // creation a new function to validate the product
 func ValidateCreateProduct(product models.Product) error {
-	if product.SKU == "" {
-        return errors.New("SKU is required")
+	if product.Sku == "" {
+        return errors.New("sku is required")
     }
 	if product.Name == "" {
-		return errors.New("Name is required")
+		return errors.New("name is required")
 	}
 	if product.Description == "" {
-		return errors.New("Description is required")
+		return errors.New("description is required")
 	}
 	if product.Price <= 0.0 {
-		return errors.New("Price must be positive")
+		return errors.New("price must be positive")
 	}
 	return nil
 }
@@ -26,13 +26,13 @@ func ValidateCreateProduct(product models.Product) error {
 // creation a new function to validate the product
 func ValidateUpdateProduct(product models.Product) error {
 	if product.Name == "" {
-		return errors.New("Name is required")
+		return errors.New("name is required")
 	}
 	if product.Description == "" {
-		return errors.New("Description is required")
+		return errors.New("description is required")
 	}
 	if product.Price <= 0.0 {
-		return errors.New("Price must be positive")
+		return errors.New("price must be positive")
 	}
 	return nil
 }

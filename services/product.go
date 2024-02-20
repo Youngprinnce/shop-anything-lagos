@@ -25,8 +25,8 @@ func CreateProduct(merchantID string, product models.Product) (models.Product, e
 
 	//  Check if the product sku already exists in the merchant's products
 	for _, merchantProduct := range merchantProducts.([]models.Product) {
-		if merchantProduct.SKU == product.SKU {
-			return models.Product{}, fmt.Errorf("product with SKU %s already exists for merchant %s", product.SKU, merchantID)
+		if merchantProduct.Sku == product.Sku {
+			return models.Product{}, fmt.Errorf("product with SKU %s already exists for merchant %s", product.Sku, merchantID)
 		}
 	}
 
@@ -73,7 +73,7 @@ func GetProduct(merchantID string, skuID string) (models.Product, error) {
 	}
 
 	for _, product := range merchantProducts.([]models.Product) {
-		if product.SKU == skuID {
+		if product.Sku == skuID {
 			return product, nil
 		}
 	}
@@ -89,7 +89,7 @@ func UpdateProduct(merchantID string, skuID string, product models.Product) (mod
 	}
 
 	for i, p := range merchantProducts.([]models.Product) {
-		if p.SKU == skuID {
+		if p.Sku == skuID {
 			// Only update name, decsription and price and update the updated at field
 			p.Name = product.Name
 			p.Description = product.Description
@@ -115,7 +115,7 @@ func DeleteProduct(merchantID string, skuID string) error {
 	}
 
 	for i, p := range merchantProducts.([]models.Product) {
-		if p.SKU == skuID {
+		if p.Sku == skuID {
 			// Remove the product from the slice
 			// First argument in the append method creates a new slice containing elements from the original slice up to (but not including) index i.
 			// Second argument in the append method creates a new slice containing elements from the original slice starting from index i+1 to the end.
