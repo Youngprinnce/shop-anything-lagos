@@ -3,7 +3,7 @@ package middleware
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/Youngprinnce/shop-anything-lagos/models"
@@ -13,14 +13,14 @@ import (
 func ValidateProduct(next http.HandlerFunc, validate func(models.Product) error) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the request body
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			utils.HandleError(w, err, http.StatusInternalServerError)
 			return
 		}
 
 		// Restore the request body with the original data
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+		r.Body = io.NopCloser(bytes.NewBuffer(body))
 
 		// Decode the request body into a Product struct for validation
 		var product models.Product
