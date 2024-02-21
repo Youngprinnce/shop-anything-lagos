@@ -69,8 +69,8 @@ func TestGetAllProducts(t *testing.T) {
 	}
 
 	// Check if created product was returned
-	if products[0].ID != createdProduct.ID {
-		t.Errorf("Expected product with ID %s to be returned, got product with ID %s", createdProduct.ID, products[0].ID)
+	if products[product.Sku].Sku != createdProduct.Sku {
+		t.Errorf("Expected product with Sku %s to be returned, got product with Sku %s", createdProduct.Sku, products[product.Sku].Sku)
 	}
 }
 
