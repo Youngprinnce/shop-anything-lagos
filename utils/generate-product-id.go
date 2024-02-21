@@ -4,17 +4,12 @@ import (
     "errors"
     "math/rand"
     "strings"
-    "time"
 )
 
 var (
     // Global map for storing generated IDs
     generatedIDs map[string]bool = make(map[string]bool)
 )
-
-func init() {
-    rand.Seed(time.Now().UnixNano()) // Seed random number generator
-}
 
 // GenerateProductID generates a unique 16-character alphanumeric product ID.
 func GenerateProductID() (string, error) {
