@@ -17,7 +17,7 @@ http://localhost:8080
 | `/api/products/{merchantID}/{skuID}`     | DELETE | Delete a single merchant product.     | -                                            | **204 No Content**                            | **404 Not Found**              |
 
 ## ERD DESIGN
-![](SQL ERD.png)
+![](SQL_ERD.png)
 
 ## Question 2b
 How can you design the database for this particular problem for performance given that you have a large number of merchants?
@@ -34,4 +34,5 @@ data integrity and consistency: SQL databases offer built-in features for data i
 complex and structured data:  SQL databases are designed to handle structured data with well-defined schemas, such as financial transactions, user profiles, or product information
 
 
-
+### Documentation
+- [Documentation](https://documenter.getpostman.com/view/17896528/2sA2r9X3iG)
